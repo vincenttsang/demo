@@ -5,25 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0842a72c-9d3c-4c00-bdea-7783b0302912" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/exp/disk/Controller/OSManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/exp/disk/Listener/JTextFieldHintListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/exp/disk/Listener/MouseClickedTiwceListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/exp/disk/Main/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/exp/disk/Model/FileModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/exp/disk/View/UIDesign.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/exp/disk/FXMLController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/exp/disk/MainApp.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/primary.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/primary.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/exp/disk/FXMLController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/exp/disk/MainApp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fxml/primary.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fxml/primary.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,14 +34,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="exp.disk.Main.Main" />

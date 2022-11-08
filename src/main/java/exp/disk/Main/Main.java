@@ -9,7 +9,7 @@ public class Main {
         try {
             OSManager manager = new OSManager();
             UIDesign ui = new UIDesign(manager);
-            ui.getOsManager().setUiDesign(ui);
+            ui.getOsManager().setUIDesign(ui);
 
         } catch (Exception e) {
             e.printStackTrace();

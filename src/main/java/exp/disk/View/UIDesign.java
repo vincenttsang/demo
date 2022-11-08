@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 2019-12-7 武跃航
@@ -56,7 +57,7 @@ public class UIDesign {
     }
 
     public void initView() {
-        jFrame = new JFrame("操作系统课程设计-武跃航");
+        jFrame = new JFrame("操作系统课程设计");
         jPanel = new JPanel();
         jPanelShowSpace = new JPanel();
         jLabelCata = new JLabel("当前路径");
@@ -109,7 +110,7 @@ public class UIDesign {
                 JMenuItem jMenuItem = (JMenuItem) e.getSource();
                 if (jMenuItem.equals(item1)) {
                     osManager.readFile();
-                    osManager.setNowCatalog(osManager.getRoot());
+                    osManager.setCurrentCatalog(osManager.getRoot());
                     refreshTree();
 
                 } else if (jMenuItem.equals(item2)) {
@@ -155,7 +156,7 @@ public class UIDesign {
                 JTextArea jTextArea = new JTextArea();
                 JScrollPane jScrollPane = new JScrollPane(jTextArea);
                 jFrame.getContentPane().add(jScrollPane);
-                jTextArea.setText(osManager.getHelpInstrutions());
+                jTextArea.setText(osManager.getHelpInstructions());
                 jTextArea.setEditable(false);
                 Font font = new Font("黑体", Font.PLAIN, 20);
 
@@ -173,7 +174,7 @@ public class UIDesign {
         jLabel.setBounds(100, 100, 50, 200);
 
 
-        jTextFieldPath.setText((osManager.getNowCatalog().getName()));
+        jTextFieldPath.setText((osManager.getCurrentCatalog().getName()));
         jTextFieldPath.setFont(new Font("黑体", Font.PLAIN, 20));
         jTextFieldPath.setBounds(180, 0, 540, 30);
         jTextFieldPath.setFont(new Font("黑体", Font.PLAIN, 15));
@@ -388,7 +389,7 @@ public class UIDesign {
             //根据键值获取到当前目录下的文件对象
             FileModel fileModel = fileroot.getSubMap().get(key);
             //如果该文件为非隐藏状态
-            if (!fileModel.isAttrIsHide()) {
+            if (!fileModel.isHidden()) {
                 //新建结点
                 DefaultMutableTreeNode node = new DefaultMutableTreeNode(fileModel.getName());
                 //让根节点add上新的子结点
@@ -416,7 +417,7 @@ public class UIDesign {
                     //对fat表进行遍历，若为使用状态，设置颜色为红色，否则设置颜色为绿色
                     for (int i = 2; i < 128; i++) {
                         jButton = JbuttonList.get(i);
-                        if (osManager.getFat()[i] == 255) {
+                        if (osManager.getFAT()[i] == 255) {
                             jButton.setBackground(Color.red);
                         } else {
                             jButton.setBackground(Color.green);
@@ -438,7 +439,11 @@ public class UIDesign {
         String[] strs = OSManager.editStr(str);
         switch (strs[0]) {
 
-            case "create":
+            case "create" -> {
+                if(strs.length <= 2) {
+                    JOptionPane.showMessageDialog(null, "您所输入的命令有误，请检查！", "提示", JOptionPane.PLAIN_MESSAGE);
+                    return;
+                }
                 JFrame jFrame = new JFrame();
                 JTextArea jTextArea = new JTextArea();
                 jTextArea.setLineWrap(true);
@@ -452,7 +457,6 @@ public class UIDesign {
                         super.windowClosing(e);
                         if (JOptionPane.showConfirmDialog(null,
                                 "您确认要保存文件吗", "确认", JOptionPane.YES_NO_OPTION) == 0) {
-                            int size = jTextArea.getText().length() / (2 * 64);
                             osManager.createFile(strs[1], strs[2], jTextArea.getText());
                             JOptionPane.showMessageDialog(null, "保存文件成功!", "提示", JOptionPane.PLAIN_MESSAGE);
                         }
@@ -462,20 +466,20 @@ public class UIDesign {
                         ((Toolkit.getDefaultToolkit().getScreenSize().height) / 2) - 200, 400, 400);
 
                 refreshTree();
-                break;
-            case "makdir":
+            }
+            case "mkdir" -> {
                 if (strs.length < 2) {
                     JOptionPane.showMessageDialog(null, "您所输入的命令有误，请检查！", "提示", JOptionPane.PLAIN_MESSAGE);
                 } else {
-                    if (osManager.createCatolog(strs[1])) {
+                    if (osManager.createCatalog(strs[1])) {
                         JOptionPane.showMessageDialog(null, "创建目录成功!", "提示", JOptionPane.PLAIN_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "创建目录失败", "提示", JOptionPane.PLAIN_MESSAGE);
                     }
 
                 }
-                break;
-            case "edit":
+            }
+            case "edit" -> {
                 if (strs.length < 2) {
                     showDialog("您所输入的命令有误，请检查！");
                 } else {
@@ -486,8 +490,8 @@ public class UIDesign {
                     }
 
                 }
-                break;
-            case "open":
+            }
+            case "open" -> {
                 if (strs.length < 2) {
                     System.out.println("您所输入的命令有误，请检查！");
                 } else {
@@ -509,7 +513,7 @@ public class UIDesign {
                                     int ByteSize = jT.getText().length() / 2;
                                     int size = ByteSize > 64 ? ByteSize % 64 + 1 : 1;
                                     fileModel.setFileContent(jT.getText());
-                                    osManager.reAdd(fileModel.getName(), size - oldSize);
+                                    osManager.append(fileModel.getName(), size - oldSize);
                                     JOptionPane.showMessageDialog(null, "保存文件成功!", "提示", JOptionPane.PLAIN_MESSAGE);
                                 }
                             }
@@ -521,8 +525,8 @@ public class UIDesign {
 
                     }
                 }
-                break;
-            case "cd":
+            }
+            case "cd" -> {
                 if (strs.length < 2) {
                     showDialog("请检查您输入的命令！");
                 } else {
@@ -531,53 +535,43 @@ public class UIDesign {
                         showTextFrame(fileModel);
                     }
                 }
-                break;
-            case "cd..":
+            }
+            case "cd.." -> {
                 osManager.backFile();
                 osManager.updatePathString();
+            }
 
-                break;
 
-
-            case "chadir": {
+            case "chdir" -> {
                 if (strs.length < 2) {
                     System.out.println("您所输入的命令有误，请检查！");
                 } else {
-                    String[] roadName = strs[1].split("/");
+                    String[] pathName = strs[1].split("/");
 
-                    osManager.searchFile(roadName);
+                    osManager.searchFile(pathName);
                     osManager.updatePathString();
                 }
-                break;
             }
-            case "showFAT":
+            case "showFAT" -> {
                 osManager.showFAT();
-                break;
+            }
 
-
-            case "rdir":
-                if (strs.length < 2) {
-                    showDialog("您所输入的命令有误，请检查！");
-                } else {
-                    osManager.deleteFile(strs[1]);
-                }
-                break;
-            case "deldir":
+            case "rmdir" -> {
                 if (strs.length < 2) {
                     showDialog("您所输入的命令有误，请检查！");
                 } else {
                     osManager.deleteNotNullCatalog(strs[1]);
                 }
-                break;
-            case "delete":
+            }
+            case "rm" -> {
                 if (strs.length < 2) {
                     showDialog("请检查输入的命令!");
                 } else {
                     osManager.deleteFile(strs[1]);
                 }
-                break;
+            }
 
-            case "format":
+            case "format" -> {
                 if (strs.length < 2) {
                     showDialog("请检查输入的命令!");
                 } else {
@@ -590,38 +584,38 @@ public class UIDesign {
 
 
                 }
-                break;
+            }
 
-            case "change"://改变文件属性
+            case "change" -> {
                 if (strs.length < 3) {
                     showDialog("请检查输入的命令！");
                 } else {
-                    System.out.println(osManager.getNowCatalog().getName() + " log");
+                    System.out.println(osManager.getCurrentCatalog().getName() + " log");
                     osManager.change(strs[1], Integer.parseInt(strs[2]));
                 }
-                break;
-            case "rename":
+            }
+            case "rename" -> {
                 if (strs.length < 3) {
                     showDialog("请检查输入的命令！");
                 } else {
                     // todo
-                    osManager.reName(strs[1], strs[2]);
+                    osManager.rename(strs[1], strs[2]);
                 }
-                break;
+            }
 
-            case "type":  //用于显示文件内容
+            case "type" -> {
                 if (strs.length < 2) {
                     showDialog("请检查输入的命令!");
                 } else {
-                    FileModel fileModel = osManager.openFile(strs[1]);
-                    if (fileModel != null) {
+                    AtomicReference<FileModel> fileModel = new AtomicReference<>(osManager.openFile(strs[1]));
+                    if (fileModel.get() != null) {
                         JFrame jF = new JFrame();
                         JTextArea jT = new JTextArea();
                         jF.getContentPane().add(jT);
                         jF.setVisible(true);
 
-                        int oldSize = fileModel.getSize();
-                        jT.setText(fileModel.getFileContent());
+                        int oldSize = fileModel.get().getSize();
+                        jT.setText(fileModel.get().getFileContent());
                         jF.addWindowListener(new WindowAdapter() {
                             @Override
                             public void windowClosing(WindowEvent e) {
@@ -630,8 +624,8 @@ public class UIDesign {
                                         "您确认要保存文件吗", "确认", JOptionPane.YES_NO_OPTION) == 0) {
                                     int ByteSize = jT.getText().length() / 2;
                                     int size = ByteSize > 64 ? ByteSize % 64 + 1 : 1;
-                                    fileModel.setFileContent(jT.getText());
-                                    osManager.reAdd(fileModel.getName(), size - oldSize);
+                                    fileModel.get().setFileContent(jT.getText());
+                                    osManager.append(fileModel.get().getName(), size - oldSize);
                                     JOptionPane.showMessageDialog(null, "保存文件成功!", "提示", JOptionPane.PLAIN_MESSAGE);
                                 }
                             }
@@ -642,7 +636,7 @@ public class UIDesign {
                         refreshTree();
                     }
                 }
-                break;
+            }  //用于显示文件内容
         }
     }
 
@@ -663,7 +657,7 @@ public class UIDesign {
             int oldSize = fileModel.getSize();
             jT.setText(fileModel.getFileContent());
             //判断该文件是否是只读文件
-            if (fileModel.isAttrIsOnlyRead()) {
+            if (fileModel.isReadOnly()) {
                 jT.setEditable(false);
             }
             //为界面的关闭添加监听事件
@@ -676,7 +670,7 @@ public class UIDesign {
                         int ByteSize = jT.getText().length() / 2;
                         int size = ByteSize > 64 ? ByteSize % 64 + 1 : 1;
                         fileModel.setFileContent(jT.getText());
-                        osManager.reAdd(fileModel.getName(), size - oldSize);
+                        osManager.append(fileModel.getName(), size - oldSize);
                         JOptionPane.showMessageDialog(null, "保存文件成功!", "提示", JOptionPane.PLAIN_MESSAGE);
                     }
                 }
@@ -708,46 +702,45 @@ public class UIDesign {
                 }
             }
             switch (jMenuItem.getText()) {
-                case "打开":
+                case "打开" -> {
                     if (fileModel.getAttr() == 3) {
                         showDialog("您要打开的是目录，如果想要进入目录，可以通过cd 目录名");
 
                     } else if (fileModel.getAttr() == 2) {
                         showTextFrame(fileModel);
                     }
-                    break;
-                case "复制":
+                }
+                case "复制" -> {
                     System.out.println("用户点击了复制");
                     BufferFileModel = fileModel;
-                    break;
-                case "剪切":
+                }
+                case "剪切" -> {
                     System.out.println("用户点击了剪切");
                     //构造新文件对象
                     FileModel file1 = new FileModel(fileModel.getName(), fileModel.getType(), fileModel.getStartNum(), fileModel.getSize());//深拷贝构造文件对象
-                    file1.setFather(fileModel.getFather());
+                    file1.setParent(fileModel.getParent());
                     file1.setFileContent(fileModel.getFileContent());//复制文件内容
                     //删除原来文件
-                    fileModel.getFather().getSubMap().remove(fileModel.getName());
+                    fileModel.getParent().getSubMap().remove(fileModel.getName());
                     osManager.getTotalFiles().remove(fileModel.getName());
-                    osManager.delFat(fileModel.getStartNum());
+                    osManager.delFAT(fileModel.getStartNum());
                     refreshTree();
 
                     BufferFileModel = file1;
-
-                    break;
-                case "删除":
+                }
+                case "删除" -> {
                     if (fileModel.getAttr() == 2) {
-                        fileModel.getFather().getSubMap().remove(fileModel.getName());
+                        fileModel.getParent().getSubMap().remove(fileModel.getName());
                         osManager.getTotalFiles().remove(fileModel.getName());
-                        osManager.delFat(fileModel.getStartNum());
+                        osManager.delFAT(fileModel.getStartNum());
                         System.out.println("文件已删除！");
                         showDialog("文件已删除！");
                         refreshTree();
                     } else if (fileModel.getAttr() == 3) {
                         showDialog("您要删除的是目录，请通过命令行删除！");
                     }
-                    break;
-                case "重命名":
+                }
+                case "重命名" -> {
                     JFrame jFrame = new JFrame();
                     jFrame.getContentPane().setLayout(null);
                     JLabel jLabel = new JLabel("请输入新的文件名");
@@ -771,30 +764,30 @@ public class UIDesign {
                         public void actionPerformed(ActionEvent e) {
                             jFrame.setVisible(false);
                             String text = jTextField.getText();
-                            finalFileModel.getFather().getSubMap().remove(finalFileModel.getName());
+                            finalFileModel.getParent().getSubMap().remove(finalFileModel.getName());
                             finalFileModel.setName(text);
-                            finalFileModel.getFather().getSubMap().put(text, finalFileModel);
+                            finalFileModel.getParent().getSubMap().put(text, finalFileModel);
                             refreshTree();//刷新文件目录树
                         }
                     });
-                    break;
-                case "粘贴":
+                }
+                case "粘贴" -> {
                     if (BufferFileModel != null) {//若用户已粘贴文件
                         if (fileModel.getSubMap().containsKey(BufferFileModel.getName())) {
                             showDialog("存在同名文件或者目录，复制失败！");
                         } else {
 
-                            int startNum = osManager.setFat(BufferFileModel.getSize());
+                            int startNum = osManager.setFAT(BufferFileModel.getSize());
                             FileModel file = new FileModel(BufferFileModel.getName(), BufferFileModel.getType(), startNum, BufferFileModel.getSize());//深拷贝构造文件对象
-                            file.setFather(fileModel); //纪录上一层目录
+                            file.setParent(fileModel); //纪录上一层目录
                             file.setFileContent(BufferFileModel.getFileContent());//复制文件内容
                             fileModel.subMap.put(file.getName(), file); //在父目录添加该文件
                             osManager.getTotalFiles().put(file.getName(), file);//放到总文件map里
-                            osManager.getFat()[0] -= file.getSize();//磁盘块数更改
+                            osManager.getFAT()[0] -= file.getSize();//磁盘块数更改
                             refreshTree();//刷新文件目录树
                         }
                     }
-                    break;
+                }
             }
         }
     }

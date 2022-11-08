@@ -10,15 +10,15 @@ import java.util.Map;
 public class FileModel implements Serializable, Cloneable {
 
 
-    public Map<String, FileModel> subMap = new HashMap<String, FileModel>();
+    public Map<String, FileModel> subMap = new HashMap();
     private String name; //文件名或目录名
     private String type; //文件类型
     private int attr; //用来识别是文件还是目录
     private int startNum;    //在FAT表中起始位置
     private int size;    //文件的大小
-    private boolean attrIsOnlyRead = false;//标识只读、非只读
-    private boolean attrIsHide = false;//标识隐藏、非隐藏
-    private FileModel father = null;    //该文件或目录的上级目录
+    private boolean isReadOnly = false;//标识只读、非只读
+    private boolean isHidden = false;//标识隐藏、非隐藏
+    private FileModel parent = null;    //该文件或目录的上级目录
     private String FileContent; //文件内容
 
     public FileModel() {
@@ -100,28 +100,28 @@ public class FileModel implements Serializable, Cloneable {
         this.size = size;
     }
 
-    public FileModel getFather() {
-        return father;
+    public FileModel getParent() {
+        return parent;
     }
 
-    public void setFather(FileModel father) {
-        this.father = father;
+    public void setParent(FileModel parent) {
+        this.parent = parent;
     }
 
-    public boolean isAttrIsOnlyRead() {
-        return attrIsOnlyRead;
+    public boolean isReadOnly() {
+        return isReadOnly;
     }
 
-    public void setAttrIsOnlyRead(boolean attrIsOnlyRead) {
-        this.attrIsOnlyRead = attrIsOnlyRead;
+    public void setReadOnly(boolean readOnly) {
+        this.isReadOnly = readOnly;
     }
 
-    public boolean isAttrIsHide() {
-        return attrIsHide;
+    public boolean isHidden() {
+        return isHidden;
     }
 
-    public void setAttrIsHide(boolean attrIsHide) {
-        this.attrIsHide = attrIsHide;
+    public void setHidden(boolean hidden) {
+        this.isHidden = hidden;
     }
 
 

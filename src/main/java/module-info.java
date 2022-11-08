@@ -1,8 +1,5 @@
 module exp.disk {
-    requires javafx.controls;
-    requires javafx.fxml;
-    requires javafx.media;
     requires java.desktop;
-    opens exp.disk.Main to javafx.fxml;
+    opens exp.disk.Main;
     exports exp.disk.Main;
 }

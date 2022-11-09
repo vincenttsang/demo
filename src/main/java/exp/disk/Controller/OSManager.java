@@ -247,7 +247,7 @@ public class OSManager {
                 currentCatalog.subMap.put(name, file); //在父目录添加该文件
                 totalFiles.put(file.getName(), file);
                 fat[0] -= size;
-                System.out.println("创建文件成功......");
+                System.out.println("创建文件成功...");
                 showFile();
                 uiDesign.refreshTree();
             }
@@ -295,7 +295,7 @@ public class OSManager {
                 //可分配的磁盘块数-1
                 fat[0]--;
                 totalFiles.put(catalog.getName(), catalog);
-                System.out.println("创建目录成功......");
+                System.out.println("创建目录成功...");
                 showFile();
                 uiDesign.refreshTree();
                 return true;
@@ -600,7 +600,7 @@ public class OSManager {
                 "create FileName  \n" +
                 "<创建文件 如：create marco  默认为txt文件 >\n\n" +
                 "mkdir Name\n" +
-                "<创建目录 如：makdir mydir >\n\n" +
+                "<创建目录 如：mkdir mydir >\n\n" +
                 "edit Name\n" +
                 "<打开文件 如：open marco 需要在相关目录下>\n\n" +
                 "cd Directory\n" +

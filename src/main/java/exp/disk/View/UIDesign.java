@@ -1,7 +1,7 @@
 package exp.disk.View;
 
-import exp.disk.Listener.JTextFieldHintListener;
 import exp.disk.Controller.OSManager;
+import exp.disk.Listener.JTextFieldHintListener;
 import exp.disk.Model.FileModel;
 
 import javax.swing.*;
@@ -14,26 +14,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
-/**
- * 2019-12-7 武跃航
- * 该类主要用于界面层
- */
 public class UIDesign {
 
-    public ArrayList<String> gradeNames = new ArrayList<>();
+    private final FileModel fileModel;
+    private final ArrayList<JButton> JButtonList = new ArrayList<>();
     DefaultTreeModel treeModelPointed;
     DefaultMutableTreeNode root;
     private JFrame jFrame;
     private JPanel jPanel;
     private JButton button1, button2, buttonFlagRed, buttonFlagGreen;
     private JTextField jtextField, jTextFieldPath;
-    private JLabel jLabel, jLabelCata, jLabelDiskShow, jLabelFlagGreen, jLabelFlagRed;
-    private JTable jTable;
+    private JLabel jLabel, jLabelCatalog, jLabelDiskShow, jLabelFlagGreen, jLabelFlagRed;
     private JPanel jPanelCenter, jPanelNorth, jPanelSouth, jPanelShowSpace;
     private OSManager osManager;
     private JTree tree;
-    private final FileModel Fileroot;
-    private final ArrayList<JButton> JbuttonList = new ArrayList<>();
     private JMenuBar jMenuBar;
     private JMenu jMenu;
     private JMenuItem item1, item2;
@@ -42,7 +36,7 @@ public class UIDesign {
 
     public UIDesign(OSManager osManager) {
         this.osManager = osManager;
-        Fileroot = osManager.getRoot();
+        fileModel = osManager.getRoot();
         initView();
         startUpdateThread();
 
@@ -60,10 +54,10 @@ public class UIDesign {
         jFrame = new JFrame("操作系统课程设计");
         jPanel = new JPanel();
         jPanelShowSpace = new JPanel();
-        jLabelCata = new JLabel("当前路径");
+        jLabelCatalog = new JLabel("当前路径");
         jLabel = new JLabel("欢迎来到文件管理模拟系统");
         jLabelDiskShow = new JLabel("磁盘空间占用情况");
-        jTable = new JTable(13, 10);
+        JTable jTable = new JTable(13, 10);
 
 
         jTextFieldPath = new JTextField(30);
@@ -78,8 +72,8 @@ public class UIDesign {
         jLabelFlagGreen = new JLabel("空闲磁盘块");
         jLabelFlagRed = new JLabel("已占用磁盘块");
 
-        jLabelFlagRed.setFont(new Font("黑体", Font.PLAIN, 20));
-        jLabelFlagGreen.setFont(new Font("黑体", Font.PLAIN, 20));
+        jLabelFlagRed.setFont(new Font("Default", Font.PLAIN, 20));
+        jLabelFlagGreen.setFont(new Font("Default", Font.PLAIN, 20));
 
         jLabelFlagRed.setBounds(700, 200, 120, 20);
         jLabelFlagGreen.setBounds(700, 260, 120, 20);
@@ -91,47 +85,44 @@ public class UIDesign {
         jPanelShowSpace.add(buttonFlagGreen);
 
 
-        buttonFlagRed.setBackground(Color.red);
+        buttonFlagRed.setBackground(Color.RED);
         buttonFlagRed.setBounds(860, 260, 70, 20);
 
         jPanelShowSpace.add(buttonFlagRed);
 
 
         jMenuBar.add(jMenu);
-        jMenu.setFont(new Font("黑体", Font.PLAIN, 20));
-        item1.setFont(new Font("黑体", Font.PLAIN, 20));
-        item2.setFont(new Font("黑体", Font.PLAIN, 20));
+        jMenu.setFont(new Font("Default", Font.PLAIN, 20));
+        item1.setFont(new Font("Default", Font.PLAIN, 20));
+        item2.setFont(new Font("Default", Font.PLAIN, 20));
         jMenu.add(item1);
         jMenu.add(item2);
         jFrame.setJMenuBar(jMenuBar);
-        ActionListener l = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JMenuItem jMenuItem = (JMenuItem) e.getSource();
-                if (jMenuItem.equals(item1)) {
-                    osManager.readFile();
-                    osManager.setCurrentCatalog(osManager.getRoot());
-                    refreshTree();
+        ActionListener l = e -> {
+            JMenuItem jMenuItem = (JMenuItem) e.getSource();
+            if (jMenuItem.equals(item1)) {
+                osManager.readFile();
+                osManager.setCurrentCatalog(osManager.getRoot());
+                refreshTree();
 
-                } else if (jMenuItem.equals(item2)) {
-                    System.exit(0);
-                }
+            } else if (jMenuItem.equals(item2)) {
+                System.exit(0);
             }
         };
         item1.addActionListener(l);
         item2.addActionListener(l);
 
 
-        /**
-         *   确定按钮以及查看命令帮助按钮
+        /*
+            确定按钮以及查看命令帮助按钮
          */
 
         button1 = new JButton("确定");
         button2 = new JButton("查看命令帮助");
         button1.setBounds(430, 50, 70, 40);
-        button1.setFont(new Font("黑体", Font.PLAIN, 15));
+        button1.setFont(new Font("Default", Font.PLAIN, 15));
         button2.setBounds(570, 50, 150, 40);
-        button2.setFont(new Font("黑体", Font.PLAIN, 15));
+        button2.setFont(new Font("Default", Font.PLAIN, 15));
 
         button1.addActionListener(new ActionListener() {
             @Override
@@ -158,7 +149,7 @@ public class UIDesign {
                 jFrame.getContentPane().add(jScrollPane);
                 jTextArea.setText(osManager.getHelpInstructions());
                 jTextArea.setEditable(false);
-                Font font = new Font("黑体", Font.PLAIN, 20);
+                Font font = new Font("Default", Font.PLAIN, 13);
 
                 jTextArea.setFont(font);
                 jFrame.setBounds(((Toolkit.getDefaultToolkit().getScreenSize().width) / 2) - 100,
@@ -169,19 +160,19 @@ public class UIDesign {
         });
 
 
-        Font font = new Font("黑体", Font.PLAIN, 30);
+        Font font = new Font("Default", Font.PLAIN, 30);
         jLabel.setFont(font);
         jLabel.setBounds(100, 100, 50, 200);
 
 
         jTextFieldPath.setText((osManager.getCurrentCatalog().getName()));
-        jTextFieldPath.setFont(new Font("黑体", Font.PLAIN, 20));
+        jTextFieldPath.setFont(new Font("Default", Font.PLAIN, 20));
         jTextFieldPath.setBounds(180, 0, 540, 30);
-        jTextFieldPath.setFont(new Font("黑体", Font.PLAIN, 15));
+        jTextFieldPath.setFont(new Font("Default", Font.PLAIN, 15));
 
 
-        jLabelCata.setBounds(80, 0, 100, 30);
-        jLabelCata.setFont(new Font("黑体", Font.PLAIN, 20));
+        jLabelCatalog.setBounds(80, 0, 100, 30);
+        jLabelCatalog.setFont(new Font("Default", Font.PLAIN, 20));
 
 
         jtextField = new JTextField(30);
@@ -205,7 +196,7 @@ public class UIDesign {
         jPanel.add(jPanelCenter);
 
 
-        jPanelCenter.add(jLabelCata);
+        jPanelCenter.add(jLabelCatalog);
         jPanelCenter.add(jTextFieldPath);
 
         jPanelCenter.add(button1);
@@ -216,7 +207,7 @@ public class UIDesign {
         jPanelShowSpace.setLayout(null);
         jPanelShowSpace.add(jLabelDiskShow);
         jLabelDiskShow.setBounds(30, 0, 200, 20);
-        jLabelDiskShow.setFont(new Font("黑体", Font.PLAIN, 20));
+        jLabelDiskShow.setFont(new Font("Default", Font.PLAIN, 20));
         jPanelCenter.add(jPanelShowSpace);
 
         /**
@@ -225,14 +216,14 @@ public class UIDesign {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 13; j++) {
                 JButton jButton = new JButton();
-                JbuttonList.add(jButton);
+                JButtonList.add(jButton);
                 jPanelShowSpace.add(jButton);
                 jButton.setBounds(30 + j * 50, 30 + i * 42, 40, 30);
             }
         }
         for (int i = 0; i < 11; i++) {
             JButton jButton = new JButton();
-            JbuttonList.add(jButton);
+            JButtonList.add(jButton);
             jPanelShowSpace.add(jButton);
 
             jButton.setBounds(30 + i * 50, 320 + 16 + 70, 40, 30);
@@ -266,24 +257,24 @@ public class UIDesign {
 
                     //获取鼠标右键点击文件的路径
                     TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
-                    String[] strs = null;
+                    String[] strings = null;
                     if (selPath != null) {
                         Object[] arr = selPath.getPath();
                         System.out.println(Arrays.toString(arr));
-                        strs = new String[arr.length];
+                        strings = new String[arr.length];
                         for (int i = 0; i < arr.length; i++) {
-                            strs[i] = arr[i].toString();
+                            strings[i] = arr[i].toString();
                         }
                     }
 
 
                     //把点击文件的路径作为参数给到监听器
-                    jMenuItem1.addActionListener(new ItemClickListener(strs));
-                    jMenuItem2.addActionListener(new ItemClickListener(strs));
-                    jMenuItem3.addActionListener(new ItemClickListener(strs));
-                    jMenuItem4.addActionListener(new ItemClickListener(strs));
-                    jMenuItem5.addActionListener(new ItemClickListener(strs));
-                    jMenuItem6.addActionListener(new ItemClickListener(strs));
+                    jMenuItem1.addActionListener(new ItemClickListener(strings));
+                    jMenuItem2.addActionListener(new ItemClickListener(strings));
+                    jMenuItem3.addActionListener(new ItemClickListener(strings));
+                    jMenuItem4.addActionListener(new ItemClickListener(strings));
+                    jMenuItem5.addActionListener(new ItemClickListener(strings));
+                    jMenuItem6.addActionListener(new ItemClickListener(strings));
 
 
                     //添加菜单项
@@ -301,12 +292,13 @@ public class UIDesign {
 
             }
         };
-        //为树添加鼠标监听
+        // 为树添加鼠标监听
         tree.addMouseListener(ml);
         tree.setPreferredSize(new Dimension(150, 50));
         jPanel.add(tree);
-        tree.setBounds(0, 70, 150, 500);
-        tree.setFont(new Font("黑体", Font.PLAIN, 20));
+        // 文件树的显示大小
+        tree.setBounds(0, 70, 200, 600);
+        tree.setFont(new Font("Default", Font.PLAIN, 20));
 
 
         jPanelSouth = new JPanel();
@@ -359,7 +351,6 @@ public class UIDesign {
     /**
      * 提示框的显示
      *
-     * @param str
      */
     public void showDialog(String str) {
         JOptionPane.showMessageDialog(null, str, "提示", JOptionPane.PLAIN_MESSAGE);
@@ -377,17 +368,17 @@ public class UIDesign {
     /**
      * 构造文件目录树的方法
      *
-     * @param fileroot
+     * @param fileRoot
      * @param root
      */
-    public void BuildJTree(FileModel fileroot, DefaultMutableTreeNode root) {
+    public void BuildJTree(FileModel fileRoot, DefaultMutableTreeNode root) {
 
 
         root.removeAllChildren();  //将所有结点移除
         //对根目录进行遍历
-        for (String key : fileroot.getSubMap().keySet()) {
+        for (String key : fileRoot.getSubMap().keySet()) {
             //根据键值获取到当前目录下的文件对象
-            FileModel fileModel = fileroot.getSubMap().get(key);
+            FileModel fileModel = fileRoot.getSubMap().get(key);
             //如果该文件为非隐藏状态
             if (!fileModel.isHidden()) {
                 //新建结点
@@ -402,25 +393,27 @@ public class UIDesign {
     }
 
     /**
-     * 启动一个进程，不断的刷新按钮的颜色
+     * 启动一个进程，不断地刷新按钮的颜色
      */
     public void startUpdateThread() {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
-                    JButton jButton = null;
+                    JButton jButton;
 
                     //前两个 预先置为使用状态
-                    JbuttonList.get(0).setBackground(Color.red);
-                    JbuttonList.get(1).setBackground(Color.red);
+                    JButtonList.get(0).setBackground(Color.RED);
+                    JButtonList.get(1).setBackground(Color.RED);
                     //对fat表进行遍历，若为使用状态，设置颜色为红色，否则设置颜色为绿色
                     for (int i = 2; i < 128; i++) {
-                        jButton = JbuttonList.get(i);
+                        jButton = JButtonList.get(i);
                         if (osManager.getFAT()[i] == 255) {
-                            jButton.setBackground(Color.red);
+                            jButton.setBackground(Color.RED);
+                            jButton.setForeground(Color.RED);
                         } else {
-                            jButton.setBackground(Color.green);
+                            jButton.setBackground(Color.GREEN);
+                            jButton.setForeground(Color.GREEN);
                         }
                     }
                 }
@@ -436,11 +429,11 @@ public class UIDesign {
      * @param str
      */
     public void DoInstructions(String str) {
-        String[] strs = OSManager.editStr(str);
-        switch (strs[0]) {
+        String[] strings = OSManager.editStr(str);
+        switch (strings[0]) {
 
             case "create" -> {
-                if(strs.length <= 2) {
+                if (strings.length <= 2) {
                     JOptionPane.showMessageDialog(null, "您所输入的命令有误，请检查！", "提示", JOptionPane.PLAIN_MESSAGE);
                     return;
                 }
@@ -457,7 +450,7 @@ public class UIDesign {
                         super.windowClosing(e);
                         if (JOptionPane.showConfirmDialog(null,
                                 "您确认要保存文件吗", "确认", JOptionPane.YES_NO_OPTION) == 0) {
-                            osManager.createFile(strs[1], strs[2], jTextArea.getText());
+                            osManager.createFile(strings[1], strings[2], jTextArea.getText());
                             JOptionPane.showMessageDialog(null, "保存文件成功!", "提示", JOptionPane.PLAIN_MESSAGE);
                         }
                     }
@@ -468,10 +461,10 @@ public class UIDesign {
                 refreshTree();
             }
             case "mkdir" -> {
-                if (strs.length < 2) {
+                if (strings.length < 2) {
                     JOptionPane.showMessageDialog(null, "您所输入的命令有误，请检查！", "提示", JOptionPane.PLAIN_MESSAGE);
                 } else {
-                    if (osManager.createCatalog(strs[1])) {
+                    if (osManager.createCatalog(strings[1])) {
                         JOptionPane.showMessageDialog(null, "创建目录成功!", "提示", JOptionPane.PLAIN_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "创建目录失败", "提示", JOptionPane.PLAIN_MESSAGE);
@@ -480,10 +473,10 @@ public class UIDesign {
                 }
             }
             case "edit" -> {
-                if (strs.length < 2) {
+                if (strings.length < 2) {
                     showDialog("您所输入的命令有误，请检查！");
                 } else {
-                    FileModel fileModel = osManager.openFile(strs[1]);
+                    FileModel fileModel = osManager.openFile(strings[1]);
                     //若存在该文件
                     if (fileModel != null) {
                         showTextFrame(fileModel);
@@ -492,10 +485,10 @@ public class UIDesign {
                 }
             }
             case "open" -> {
-                if (strs.length < 2) {
+                if (strings.length < 2) {
                     System.out.println("您所输入的命令有误，请检查！");
                 } else {
-                    FileModel fileModel = osManager.openFile(strs[1]);
+                    FileModel fileModel = osManager.openFile(strings[1]);
                     if (fileModel != null) {
                         JFrame jF = new JFrame();
                         JTextArea jT = new JTextArea();
@@ -527,10 +520,10 @@ public class UIDesign {
                 }
             }
             case "cd" -> {
-                if (strs.length < 2) {
+                if (strings.length < 2) {
                     showDialog("请检查您输入的命令！");
                 } else {
-                    FileModel fileModel = osManager.openFile(strs[1]);
+                    FileModel fileModel = osManager.openFile(strings[1]);
                     if (fileModel != null && (fileModel.getAttr() == 2)) {
                         showTextFrame(fileModel);
                     }
@@ -543,10 +536,10 @@ public class UIDesign {
 
 
             case "chdir" -> {
-                if (strs.length < 2) {
+                if (strings.length < 2) {
                     System.out.println("您所输入的命令有误，请检查！");
                 } else {
-                    String[] pathName = strs[1].split("/");
+                    String[] pathName = strings[1].split("/");
 
                     osManager.searchFile(pathName);
                     osManager.updatePathString();
@@ -557,22 +550,22 @@ public class UIDesign {
             }
 
             case "rmdir" -> {
-                if (strs.length < 2) {
+                if (strings.length < 2) {
                     showDialog("您所输入的命令有误，请检查！");
                 } else {
-                    osManager.deleteNotNullCatalog(strs[1]);
+                    osManager.deleteNotNullCatalog(strings[1]);
                 }
             }
             case "rm" -> {
-                if (strs.length < 2) {
+                if (strings.length < 2) {
                     showDialog("请检查输入的命令!");
                 } else {
-                    osManager.deleteFile(strs[1]);
+                    osManager.deleteFile(strings[1]);
                 }
             }
 
             case "format" -> {
-                if (strs.length < 2) {
+                if (strings.length < 2) {
                     showDialog("请检查输入的命令!");
                 } else {
                     if (JOptionPane.showConfirmDialog(null,
@@ -587,27 +580,27 @@ public class UIDesign {
             }
 
             case "change" -> {
-                if (strs.length < 3) {
+                if (strings.length < 3) {
                     showDialog("请检查输入的命令！");
                 } else {
                     System.out.println(osManager.getCurrentCatalog().getName() + " log");
-                    osManager.change(strs[1], Integer.parseInt(strs[2]));
+                    osManager.change(strings[1], Integer.parseInt(strings[2]));
                 }
             }
             case "rename" -> {
-                if (strs.length < 3) {
+                if (strings.length < 3) {
                     showDialog("请检查输入的命令！");
                 } else {
                     // todo
-                    osManager.rename(strs[1], strs[2]);
+                    osManager.rename(strings[1], strings[2]);
                 }
             }
 
             case "type" -> {
-                if (strs.length < 2) {
+                if (strings.length < 2) {
                     showDialog("请检查输入的命令!");
                 } else {
-                    AtomicReference<FileModel> fileModel = new AtomicReference<>(osManager.openFile(strs[1]));
+                    AtomicReference<FileModel> fileModel = new AtomicReference<>(osManager.openFile(strings[1]));
                     if (fileModel.get() != null) {
                         JFrame jF = new JFrame();
                         JTextArea jT = new JTextArea();
@@ -681,11 +674,15 @@ public class UIDesign {
         }
     }
 
+    public FileModel getFileModel() {
+        return fileModel;
+    }
+
     /**
      * 右键点击文件目录树进行操作时的监听器
      */
     private class ItemClickListener implements ActionListener {
-        String[] path = null;
+        String[] path;
 
         public ItemClickListener(String[] path) {
             this.path = path;
@@ -744,15 +741,15 @@ public class UIDesign {
                     JFrame jFrame = new JFrame();
                     jFrame.getContentPane().setLayout(null);
                     JLabel jLabel = new JLabel("请输入新的文件名");
-                    jLabel.setFont(new Font("黑体", Font.PLAIN, 20));
+                    jLabel.setFont(new Font("Default", Font.PLAIN, 20));
                     jFrame.getContentPane().add(jLabel);
                     jLabel.setBounds(0, 0, 400, 30);
                     JTextField jTextField = new JTextField();
-                    jTextField.setFont(new Font("黑体", Font.PLAIN, 20));
+                    jTextField.setFont(new Font("Default", Font.PLAIN, 20));
                     jTextField.setBounds(30, 30, 330, 30);
                     jFrame.getContentPane().add(jTextField);
                     JButton jButton = new JButton("确定");
-                    jButton.setFont(new Font("黑体", Font.PLAIN, 20));
+                    jButton.setFont(new Font("Default", Font.PLAIN, 20));
                     jButton.setBounds(120, 60, 80, 30);
                     jFrame.getContentPane().add(jButton);
                     jFrame.setBounds(((Toolkit.getDefaultToolkit().getScreenSize().width) / 2) - 200,

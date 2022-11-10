@@ -80,12 +80,12 @@ public class UIDesign {
         jPanelShowSpace.add(jLabelFlagGreen);
         jPanelShowSpace.add(jLabelFlagRed);
 
-        buttonFlagGreen.setBackground(Color.GREEN);
+        buttonFlagGreen.setBackground(Color.LIGHT_GRAY);
         buttonFlagGreen.setBounds(250, 450, 70, 20);
         jPanelShowSpace.add(buttonFlagGreen);
 
 
-        buttonFlagRed.setBackground(Color.RED);
+        buttonFlagRed.setBackground(Color.WHITE);
         buttonFlagRed.setBounds(490, 450, 70, 20);
 
         jPanelShowSpace.add(buttonFlagRed);
@@ -121,7 +121,7 @@ public class UIDesign {
         button2 = new JButton("查看命令帮助");
         button1.setBounds(430, 50, 70, 40);
         button1.setFont(new Font("Default", Font.PLAIN, 15));
-        button2.setBounds(570, 50, 150, 40);
+        button2.setBounds(530, 50, 150, 40);
         button2.setFont(new Font("Default", Font.PLAIN, 15));
 
         button1.addActionListener(new ActionListener() {
@@ -207,7 +207,7 @@ public class UIDesign {
         jPanelShowSpace.setBounds(50, 120, 1100, 500);
         jPanelShowSpace.setLayout(null);
         jPanelShowSpace.add(jLabelDiskShow);
-        jLabelDiskShow.setBounds(30, 0, 200, 20);
+        jLabelDiskShow.setBounds(30, -5, 200, 30);
         jLabelDiskShow.setFont(new Font("Default", Font.PLAIN, 20));
         jPanelCenter.add(jPanelShowSpace);
 
@@ -403,17 +403,17 @@ public class UIDesign {
                     JButton jButton;
 
                     //前两个 预先置为使用状态
-                    JButtonList.get(0).setBackground(Color.RED);
-                    JButtonList.get(1).setBackground(Color.RED);
-                    //对fat表进行遍历，若为使用状态，设置颜色为红色，否则设置颜色为绿色
+                    JButtonList.get(0).setBackground(Color.LIGHT_GRAY);
+                    JButtonList.get(1).setBackground(Color.LIGHT_GRAY);
+                    //对fat表进行遍历，若为使用状态，设置颜色为灰色，否则设置颜色为白色
                     for (int i = 2; i < 128; i++) {
                         jButton = JButtonList.get(i);
                         if (osManager.getFAT()[i] == 255) {
-                            jButton.setBackground(Color.RED);
-                            jButton.setForeground(Color.RED);
+                            jButton.setBackground(Color.LIGHT_GRAY);
+                            jButton.setForeground(Color.LIGHT_GRAY);
                         } else {
-                            jButton.setBackground(Color.GREEN);
-                            jButton.setForeground(Color.GREEN);
+                            jButton.setBackground(Color.WHITE);
+                            jButton.setForeground(Color.WHITE);
                         }
                     }
                 }

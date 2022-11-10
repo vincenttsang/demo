@@ -15,6 +15,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>23.0.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -38,7 +44,7 @@
                 </dependencies>
             </plugin>
 
-            <!-- Adds the mainClass to the jar so it will run outside -->
+            <!-- Adds the mainClass to the jar, so it will run outside -->
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.0</version>
@@ -52,7 +58,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Makes the jLink setup so you can give it to your friends  -->
+            <!-- Makes the jLink setup, so you can give it to your friends  -->
             <plugin>
                 <groupId>org.moditect</groupId>
                 <artifactId>moditect-maven-plugin</artifactId>
@@ -83,7 +89,6 @@
                 </executions>
             </plugin>
 
-            <!-- Copies the depend FX files to your program  -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>

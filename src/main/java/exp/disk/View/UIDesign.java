@@ -75,18 +75,18 @@ public class UIDesign {
         jLabelFlagRed.setFont(new Font("Default", Font.PLAIN, 20));
         jLabelFlagGreen.setFont(new Font("Default", Font.PLAIN, 20));
 
-        jLabelFlagRed.setBounds(700, 200, 120, 20);
-        jLabelFlagGreen.setBounds(700, 260, 120, 20);
+        jLabelFlagRed.setBounds(100, 450, 120, 20);
+        jLabelFlagGreen.setBounds(350, 450, 120, 20);
         jPanelShowSpace.add(jLabelFlagGreen);
         jPanelShowSpace.add(jLabelFlagRed);
 
         buttonFlagGreen.setBackground(Color.GREEN);
-        buttonFlagGreen.setBounds(860, 200, 70, 20);
+        buttonFlagGreen.setBounds(250, 450, 70, 20);
         jPanelShowSpace.add(buttonFlagGreen);
 
 
         buttonFlagRed.setBackground(Color.RED);
-        buttonFlagRed.setBounds(860, 260, 70, 20);
+        buttonFlagRed.setBounds(490, 450, 70, 20);
 
         jPanelShowSpace.add(buttonFlagRed);
 
@@ -185,12 +185,13 @@ public class UIDesign {
 
         jPanelCenter.add(jtextField);
         jPanelCenter.setLayout(null);
+        // 最大的Panel大小
         jPanelCenter.setBounds(150, 70, 1200, 600);
 
 
         /////////////////////////////////////////////////
         jPanelNorth.add(jLabel);
-        jPanelNorth.setBounds(0, 0, 1150, 70);
+        jPanelNorth.setBounds(0, 0, 1155, 70);
         jPanel.setLayout(null);
         jPanel.add(jPanelNorth);
         jPanel.add(jPanelCenter);
@@ -315,9 +316,9 @@ public class UIDesign {
             }
         });
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        // 窗体大小在这里设置
         jFrame.setBounds(((Toolkit.getDefaultToolkit().getScreenSize().width) / 2) - 300,
-                ((Toolkit.getDefaultToolkit().getScreenSize().height) / 2) - 300, 1200, 750);
+                ((Toolkit.getDefaultToolkit().getScreenSize().height) / 2) - 300, 900, 750);
         jFrame.setVisible(true);
 
     }
@@ -350,7 +351,6 @@ public class UIDesign {
 
     /**
      * 提示框的显示
-     *
      */
     public void showDialog(String str) {
         JOptionPane.showMessageDialog(null, str, "提示", JOptionPane.PLAIN_MESSAGE);

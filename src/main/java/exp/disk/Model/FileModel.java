@@ -31,6 +31,7 @@ public class FileModel implements Serializable, Cloneable {
         this.startNum = startNum;
         this.size = size;
     }
+
     public FileModel(String name, int startNum) {
         this.name = name;
         this.attr = 3;

@@ -22,9 +22,9 @@ public class UIDesign {
     DefaultMutableTreeNode root;
     private JFrame jFrame;
     private JPanel jPanel;
-    private JButton button1, button2, buttonFlagRed, buttonFlagGreen;
+    private JButton buttonOkay, buttonHelp, buttonUsed, buttonFree;
     private JTextField jtextField, jTextFieldPath;
-    private JLabel jLabel, jLabelCatalog, jLabelDiskShow, jLabelFlagGreen, jLabelFlagRed;
+    private JLabel jLabel, jLabelCatalog, jLabelDiskShow, jLabelFree, jLabelUsed;
     private JPanel jPanelCenter, jPanelNorth, jPanelSouth, jPanelShowSpace;
     private OSManager osManager;
     private JTree tree;
@@ -67,28 +67,32 @@ public class UIDesign {
         jMenu = new JMenu("文件");
         item1 = new JMenuItem("导入上次修改");
         item2 = new JMenuItem("退出");
-        buttonFlagRed = new JButton();
-        buttonFlagGreen = new JButton();
-        jLabelFlagGreen = new JLabel("空闲磁盘块");
-        jLabelFlagRed = new JLabel("已占用磁盘块");
+        buttonUsed = new JButton();
+        buttonFree = new JButton();
+        jLabelFree = new JLabel("空闲磁盘块");
+        jLabelUsed = new JLabel("已占用磁盘块");
 
-        jLabelFlagRed.setFont(new Font("Default", Font.PLAIN, 20));
-        jLabelFlagGreen.setFont(new Font("Default", Font.PLAIN, 20));
+        jLabelUsed.setFont(new Font("Default", Font.PLAIN, 20));
+        jLabelFree.setFont(new Font("Default", Font.PLAIN, 20));
 
-        jLabelFlagRed.setBounds(100, 450, 120, 20);
-        jLabelFlagGreen.setBounds(350, 450, 120, 20);
-        jPanelShowSpace.add(jLabelFlagGreen);
-        jPanelShowSpace.add(jLabelFlagRed);
+        jLabelUsed.setBounds(100, 450, 120, 20);
+        jLabelFree.setBounds(350, 450, 120, 20);
+        jPanelShowSpace.add(jLabelFree);
+        jPanelShowSpace.add(jLabelUsed);
 
-        buttonFlagGreen.setBackground(Color.LIGHT_GRAY);
-        buttonFlagGreen.setBounds(250, 450, 70, 20);
-        jPanelShowSpace.add(buttonFlagGreen);
+        buttonFree.setBackground(Color.LIGHT_GRAY);
+        buttonFree.setOpaque(true);
+        buttonFree.setBorderPainted(false);
+        buttonFree.setBounds(250, 450, 70, 20);
+        jPanelShowSpace.add(buttonFree);
 
 
-        buttonFlagRed.setBackground(Color.WHITE);
-        buttonFlagRed.setBounds(490, 450, 70, 20);
+        buttonUsed.setBackground(Color.WHITE);
+        buttonUsed.setOpaque(true);
+        buttonUsed.setBorderPainted(false);
+        buttonUsed.setBounds(490, 450, 70, 20);
 
-        jPanelShowSpace.add(buttonFlagRed);
+        jPanelShowSpace.add(buttonUsed);
 
 
         jMenuBar.add(jMenu);
@@ -117,14 +121,14 @@ public class UIDesign {
             确定按钮以及查看命令帮助按钮
          */
 
-        button1 = new JButton("确定");
-        button2 = new JButton("查看命令帮助");
-        button1.setBounds(430, 50, 70, 40);
-        button1.setFont(new Font("Default", Font.PLAIN, 15));
-        button2.setBounds(530, 50, 150, 40);
-        button2.setFont(new Font("Default", Font.PLAIN, 15));
+        buttonOkay = new JButton("确定");
+        buttonHelp = new JButton("查看命令帮助");
+        buttonOkay.setBounds(430, 50, 70, 40);
+        buttonOkay.setFont(new Font("Default", Font.PLAIN, 15));
+        buttonHelp.setBounds(530, 50, 150, 40);
+        buttonHelp.setFont(new Font("Default", Font.PLAIN, 15));
 
-        button1.addActionListener(new ActionListener() {
+        buttonOkay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -140,7 +144,7 @@ public class UIDesign {
             }
         });
 
-        button2.addActionListener(new ActionListener() {
+        buttonHelp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame jFrame = new JFrame();
@@ -200,8 +204,8 @@ public class UIDesign {
         jPanelCenter.add(jLabelCatalog);
         jPanelCenter.add(jTextFieldPath);
 
-        jPanelCenter.add(button1);
-        jPanelCenter.add(button2);
+        jPanelCenter.add(buttonOkay);
+        jPanelCenter.add(buttonHelp);
 
 
         jPanelShowSpace.setBounds(50, 120, 1100, 500);
@@ -404,16 +408,24 @@ public class UIDesign {
 
                     //前两个 预先置为使用状态
                     JButtonList.get(0).setBackground(Color.LIGHT_GRAY);
+                    JButtonList.get(0).setOpaque(true);
+                    JButtonList.get(0).setBorderPainted(false);
                     JButtonList.get(1).setBackground(Color.LIGHT_GRAY);
+                    JButtonList.get(1).setOpaque(true);
+                    JButtonList.get(1).setBorderPainted(false);
                     //对fat表进行遍历，若为使用状态，设置颜色为灰色，否则设置颜色为白色
                     for (int i = 2; i < 128; i++) {
                         jButton = JButtonList.get(i);
                         if (osManager.getFAT()[i] == 255) {
                             jButton.setBackground(Color.LIGHT_GRAY);
                             jButton.setForeground(Color.LIGHT_GRAY);
+                            jButton.setOpaque(true);
+                            jButton.setBorderPainted(false);
                         } else {
                             jButton.setBackground(Color.WHITE);
                             jButton.setForeground(Color.WHITE);
+                            jButton.setOpaque(true);
+                            jButton.setBorderPainted(false);
                         }
                     }
                 }

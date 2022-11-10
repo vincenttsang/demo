@@ -6,13 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0842a72c-9d3c-4c00-bdea-7783b0302912" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/exp/disk/Model/FileModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/exp/disk/Model/FileModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/exp/disk/View/UIDesign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/exp/disk/View/UIDesign.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/exp/disk/Model/FileModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/exp/disk/Model/FileModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/exp/disk/View/UIDesign$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/exp/disk/View/UIDesign$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/exp/disk/View/UIDesign$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/exp/disk/View/UIDesign$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/exp/disk/View/UIDesign.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/exp/disk/View/UIDesign.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,6 +118,7 @@
       <workItem from="1667989142396" duration="1394000" />
       <workItem from="1668069590162" duration="1501000" />
       <workItem from="1668071110239" duration="118000" />
+      <workItem from="1668072310182" duration="438000" />
     </task>
     <servers />
   </component>

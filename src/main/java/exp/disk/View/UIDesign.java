@@ -122,45 +122,36 @@ public class UIDesign {
          */
 
         buttonOkay = new JButton("确定");
-        buttonHelp = new JButton("查看命令帮助");
         buttonOkay.setBounds(430, 50, 70, 40);
         buttonOkay.setFont(new Font("Default", Font.PLAIN, 15));
+
+        buttonHelp = new JButton("查看命令帮助");
         buttonHelp.setBounds(530, 50, 150, 40);
         buttonHelp.setFont(new Font("Default", Font.PLAIN, 15));
 
-        buttonOkay.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-
-                try {
-                    DoInstructions(jtextField.getText());
-                } catch (ArrayIndexOutOfBoundsException e1) {
-                    e1.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "请检查命令！", "提示", JOptionPane.PLAIN_MESSAGE);
-                }
-
-
+        buttonOkay.addActionListener(e -> {
+            try {
+                DoInstructions(jtextField.getText());
+            } catch (ArrayIndexOutOfBoundsException e1) {
+                e1.printStackTrace();
+                JOptionPane.showMessageDialog(null, "请检查命令！", "提示", JOptionPane.PLAIN_MESSAGE);
             }
         });
 
-        buttonHelp.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame jFrame = new JFrame();
-                JTextArea jTextArea = new JTextArea();
-                JScrollPane jScrollPane = new JScrollPane(jTextArea);
-                jFrame.getContentPane().add(jScrollPane);
-                jTextArea.setText(osManager.getHelpInstructions());
-                jTextArea.setEditable(false);
-                Font font = new Font("Default", Font.PLAIN, 13);
+        buttonHelp.addActionListener(e -> {
+            JFrame jFrame = new JFrame();
+            JTextArea jTextArea = new JTextArea();
+            JScrollPane jScrollPane = new JScrollPane(jTextArea);
+            jFrame.getContentPane().add(jScrollPane);
+            jTextArea.setText(osManager.getHelpInstructions());
+            jTextArea.setEditable(false);
+            Font font = new Font("Default", Font.PLAIN, 13);
 
-                jTextArea.setFont(font);
-                jFrame.setBounds(((Toolkit.getDefaultToolkit().getScreenSize().width) / 2) - 100,
-                        ((Toolkit.getDefaultToolkit().getScreenSize().height) / 2) - 200, 500, 500);
-                jFrame.setVisible(true);
+            jTextArea.setFont(font);
+            jFrame.setBounds(((Toolkit.getDefaultToolkit().getScreenSize().width) / 2) - 100,
+                    ((Toolkit.getDefaultToolkit().getScreenSize().height) / 2) - 200, 500, 500);
+            jFrame.setVisible(true);
 
-            }
         });
 
 
